@@ -85,7 +85,7 @@ function RunOpenJdkBenmarkMaster()
 
     cd GCP
 
-    mvn test -Dtest=$env:TEST_LIST > $PSScriptRoot\RunOpenJdkBenmarkMaster.log
+    mvn -Dtest=$env:TEST_LIST test > $PSScriptRoot\RunOpenJdkBenmarkMaster.log
 
     git clean -xdf
 
@@ -102,7 +102,7 @@ function RunMicrosoftJdkBenmarkMaster()
 
     cd GCP
 
-    mvn test -Dtest=$env:TEST_LIST > $PSScriptRoot\RunMicrosoftJdkBenmarkMaster.log
+    mvn -Dtest=$env:TEST_LIST test > $PSScriptRoot\RunMicrosoftJdkBenmarkMaster.log
 
     git clean -xdf
 
@@ -121,7 +121,7 @@ function RunOpenJdkBenmarkPerf()
 
     git checkout dev/chrisherczeg/small_git_repo_oss_perf
 
-    mvn test -Dtest=$env:TEST_LIST > $PSScriptRoot\RunOpenJdkBenmarkPerf.log
+    mvn -Dtest=$env:TEST_LIST test > $PSScriptRoot\RunOpenJdkBenmarkPerf.log
 
     git clean -xdf
 
@@ -140,7 +140,7 @@ function RunMicrosoftJdkBenmarkPerf()
 
     git checkout dev/chrisherczeg/small_git_repo_oss_perf
 
-    mvn test -Dtest=$env:TEST_LIST > $PSScriptRoot\RunMicrosoftJdkBenmarkPerf.log
+    mvn -Dtest=$env:TEST_LIST test > $PSScriptRoot\RunMicrosoftJdkBenmarkPerf.log
 
     git clean -xdf
 
