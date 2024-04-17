@@ -205,6 +205,7 @@ git add $PSScriptRoot/*.log
 git commit -m"$commitMessage"
 git push
 git restore $PSScriptRoot/.
+git checkout main
 
 # checkout branch where exclusion benchmarks will be pushed
 git checkout -b exclusion/$env:USERNAME/$branch
