@@ -127,6 +127,8 @@ function RunOpenJdkBenmarkPerf()
 
     git checkout dev/chrisherczeg/small_git_repo_oss_perf
 
+    git pull
+
     mvn -Dtest="$env:TEST_LIST" test > $PSScriptRoot\RunOpenJdkBenmarkPerf.log
 
     git clean -xdf
@@ -148,18 +150,22 @@ function RunMicrosoftJdkBenmarkPerf()
 
     git checkout dev/chrisherczeg/small_git_repo_oss_perf
 
+    git pull
+
     mvn -Dtest="$env:TEST_LIST" test > $PSScriptRoot\RunMicrosoftJdkBenmarkPerf.log
 
     git clean -xdf
 
     popd
 }
+$isAdmin = [bool](([System.Security.Principal.WindowsIdentity]::GetCurrent()).groups -match "S-1-5-32-544")
+if (-not $isAdmin) {
+    Write-Host "Please run this script as an administrator."
+    exit
+}
 
 # tidy up before starting
 git restore $PSScriptRoot/.
-
-git config --global --add safe.directory $PSScriptRoot/GCP
-git config --global --add safe.directory $PSScriptRoot/GCP_Perf
 
 # install the required tools
 InstallOpenJdk21
@@ -178,7 +184,7 @@ $commitMessage = "$env:USERNAME - $(Get-Date)"
 $branch = $(Get-Date -Format "yyyyMMddHHmmss")
 
 # Set the mvn test to run for the git client plugin repo
-$env:TEST_LIST="GitClientTest#testNullChangelogDestinationExcludes,GitClientTest#testNullChangelogDestinationIncludes"
+$env:TEST_LIST="GitClientTest,GitAPITestUpdate,GitClientCloneTest"
 
 # checkout the benchmarks branch, this is where non exclusions benchmark logs will
 # be pushed
