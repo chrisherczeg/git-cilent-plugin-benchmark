@@ -85,6 +85,8 @@ function RunOpenJdkBenmarkMaster()
 
     cd GCP
 
+    git config --global --add safe.directory $(pwd)
+
     mvn -Dtest="$env:TEST_LIST" test > $PSScriptRoot\RunOpenJdkBenmarkMaster.log
 
     git clean -xdf
@@ -102,6 +104,8 @@ function RunMicrosoftJdkBenmarkMaster()
 
     cd GCP
 
+    git config --global --add safe.directory $(pwd)
+
     mvn -Dtest="$env:TEST_LIST" test > $PSScriptRoot\RunMicrosoftJdkBenmarkMaster.log
 
     git clean -xdf
@@ -118,6 +122,8 @@ function RunOpenJdkBenmarkPerf()
     pushd .
 
     cd GCP_Perf
+
+    git config --global --add safe.directory $(pwd)
 
     git checkout dev/chrisherczeg/small_git_repo_oss_perf
 
@@ -137,6 +143,8 @@ function RunMicrosoftJdkBenmarkPerf()
     pushd .
 
     cd GCP_Perf
+
+    git config --global --add safe.directory $(pwd)
 
     git checkout dev/chrisherczeg/small_git_repo_oss_perf
 
@@ -167,16 +175,18 @@ Remove-MpPreference -ExclusionPath "$PSScriptRoot\GCP_Perf" -ErrorAction Silentl
 
 # set the commit message for the non exclusion benchmarks
 $commitMessage = "$env:USERNAME - $(Get-Date)"
+$branch = $(Get-Date -Format "yyyyMMddHHmmss")
 
 # Set the mvn test to run for the git client plugin repo
-$env:TEST_LIST="GitClientCloneTest,GitClientTest"
+$env:TEST_LIST="GitClientTest#testNullChangelogDestinationExcludes,GitClientTest#testNullChangelogDestinationIncludes"
 
 # checkout the benchmarks branch, this is where non exclusions benchmark logs will
 # be pushed
-git checkout benchmarks
+git checkout -b non_exclusion/$env:USERNAME/$branch
+git push --set-upstream origin non_exclusion/$env:USERNAME/$branch
 
 # get the disk drive stats
-winsat disk -ran -write -drive C > disk_stats.log
+winsat disk -ran -write -drive C > $PSScriptRoot\disk_stats.log
 
 # run tests
 RunOpenJdkBenmarkMaster
@@ -191,10 +201,11 @@ git push
 git restore $PSScriptRoot/.
 
 # checkout branch where exclusion benchmarks will be pushed
-git checkout exclusion_benmarks
+git checkout -b exclusion/$env:USERNAME/$branch
+git push --set-upstream origin exclusion/$env:USERNAME/$branch
 
 # get the disk drive stats
-winsat disk -ran -write -drive C > disk_stats.log
+winsat disk -ran -write -drive C > $PSScriptRoot\disk_stats.log
 
 # add windows defender exclusions
 Add-MpPreference -ExclusionPath "$PSScriptRoot\GCP"
