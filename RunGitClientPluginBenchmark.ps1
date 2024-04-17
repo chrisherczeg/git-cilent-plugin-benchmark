@@ -85,7 +85,7 @@ function RunOpenJdkBenmarkMaster()
 
     cd GCP
 
-    mvn -Dtest=$env:TEST_LIST test > $PSScriptRoot\RunOpenJdkBenmarkMaster.log
+    mvn -Dtest="$env:TEST_LIST" test > $PSScriptRoot\RunOpenJdkBenmarkMaster.log
 
     git clean -xdf
 
@@ -102,7 +102,7 @@ function RunMicrosoftJdkBenmarkMaster()
 
     cd GCP
 
-    mvn -Dtest=$env:TEST_LIST test > $PSScriptRoot\RunMicrosoftJdkBenmarkMaster.log
+    mvn -Dtest="$env:TEST_LIST" test > $PSScriptRoot\RunMicrosoftJdkBenmarkMaster.log
 
     git clean -xdf
 
@@ -121,7 +121,7 @@ function RunOpenJdkBenmarkPerf()
 
     git checkout dev/chrisherczeg/small_git_repo_oss_perf
 
-    mvn -Dtest=$env:TEST_LIST test > $PSScriptRoot\RunOpenJdkBenmarkPerf.log
+    mvn -Dtest="$env:TEST_LIST" test > $PSScriptRoot\RunOpenJdkBenmarkPerf.log
 
     git clean -xdf
 
@@ -140,7 +140,7 @@ function RunMicrosoftJdkBenmarkPerf()
 
     git checkout dev/chrisherczeg/small_git_repo_oss_perf
 
-    mvn -Dtest=$env:TEST_LIST test > $PSScriptRoot\RunMicrosoftJdkBenmarkPerf.log
+    mvn -Dtest="$env:TEST_LIST" test > $PSScriptRoot\RunMicrosoftJdkBenmarkPerf.log
 
     git clean -xdf
 
@@ -149,6 +149,9 @@ function RunMicrosoftJdkBenmarkPerf()
 
 # tidy up before starting
 git restore $PSScriptRoot/.
+
+git config --global --add safe.directory $PSScriptRoot/GCP
+git config --global --add safe.directory $PSScriptRoot/GCP_Perf
 
 # install the required tools
 InstallOpenJdk21
