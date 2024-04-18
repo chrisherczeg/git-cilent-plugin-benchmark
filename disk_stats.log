@@ -1,0 +1,10 @@
+Windows System Assessment Tool
+> Running: Feature Enumeration ''
+> Run Time 00:00:00.00
+> Running: Storage Assessment '-ran -write -drive C'
+> Run Time 00:00:00.92
+> Dshow Video Encode Time                      0.00000 s
+> Dshow Video Decode Time                      0.00000 s
+> Media Foundation Decode Time                 0.00000 s
+> Disk  Random 16.0 Write                      879.90 MB/s
+> Total Run Time 00:00:18.01
