@@ -184,7 +184,7 @@ $commitMessage = "$env:USERNAME - $(Get-Date)"
 $branch = $(Get-Date -Format "yyyyMMddHHmmss")
 
 # Set the mvn test to run for the git client plugin repo
-$env:TEST_LIST="GitClientTest,GitAPITestUpdate,GitClientCloneTest"
+$env:TEST_LIST="GitClientTest,GitClientCloneTest,GitAPITestUpdateCliGit,JGitApacheAPIImplTest,JGitAPIImplTest"
 
 # checkout the benchmarks branch, this is where non exclusions benchmark logs will
 # be pushed
