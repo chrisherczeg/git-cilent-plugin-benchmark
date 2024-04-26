@@ -178,6 +178,7 @@ CloneGitPluginPerformanceFork
 # remove Exclusion on the git repos
 Remove-MpPreference -ExclusionPath "$PSScriptRoot\GCP" -ErrorAction SilentlyContinue
 Remove-MpPreference -ExclusionPath "$PSScriptRoot\GCP_Perf" -ErrorAction SilentlyContinue
+Get-MpPreference > $PSScriptRoot\non_exclusion.log
 
 # set the commit message for the non exclusion benchmarks
 $commitMessage = "$env:USERNAME - $(Get-Date)"
@@ -217,6 +218,7 @@ winsat disk -ran -write -drive C > $PSScriptRoot\disk_stats.log
 # add windows defender exclusions
 Add-MpPreference -ExclusionPath "$PSScriptRoot\GCP"
 Add-MpPreference -ExclusionPath "$PSScriptRoot\GCP_Perf"
+Get-MpPreference > $PSScriptRoot\exclusion.log
 
 # run tests with exclusions on
 RunOpenJdkBenmarkMaster
