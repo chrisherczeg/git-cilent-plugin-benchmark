@@ -164,6 +164,8 @@ if (-not $isAdmin) {
     exit
 }
 
+cd $PSScriptRoot
+
 # tidy up before starting
 git restore $PSScriptRoot/.
 
